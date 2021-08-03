@@ -1,5 +1,6 @@
 package city.augmented.api.apis
 
+import city.augmented.api.infrastructure.ServerProperties
 import city.augmented.api.model.ImageDescriptionDto
 import city.augmented.api.model.LocalizationHintDto
 import city.augmented.api.model.LocalizationResultDto
@@ -26,7 +27,7 @@ interface LocalizerApi {
      * @return [LocalizationResultDto]
      */
     @Multipart
-    @POST("localizer/localize")
+    @POST("${ServerProperties.relocSuffix}/localizer/localize")
     suspend fun localize(
         @Part("description") description: ImageDescriptionDto,
         @Part image: MultipartBody.Part,
@@ -41,17 +42,17 @@ interface LocalizerApi {
      *  - 400: Bad request
      *  - 500: Internal Server Error
      *
-     * @param lat GPS latitude
-     * @param lon GPS longitude
-     * @param alt GPS altitude (optional) (optional)
-     * @param dop GPS HDOP (optional) (optional)
+     * @param latitude GPS latitude
+     * @param longitude GPS longitude
+     * @param altitude GPS altitude (optional) (optional)
+     * @param hDop GPS HDOP (optional) (optional)
      * @return [LocalizationStatusDto]
      */
-    @GET("localizer/prepare")
+    @GET("${ServerProperties.relocSuffix}/localizer/prepare")
     suspend fun prepare(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
-        @Query("alt") alt: Double? = null,
-        @Query("dop") dop: Float? = null
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("alt") altitude: Double? = null,
+        @Query("dop") hDop: Float? = null
     ): Response<LocalizationStatusDto>
 }

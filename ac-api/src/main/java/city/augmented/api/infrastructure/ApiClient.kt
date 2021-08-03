@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient(
     private var baseUrl: ServerUrl = ServerProperties.mainUrl,
-    private val retrofitBuilder: Retrofit.Builder,
+    private val retrofitBuilder: Retrofit.Builder = Retrofit.Builder(),
     private val serializerBuilder: Moshi.Builder = Serializer.moshiBuilder,
     private val okHttpClientBuilder: OkHttpClient.Builder? = null
 ) {
@@ -59,7 +59,7 @@ class ApiClient(
                     append(URL_PREFIX)
             else
                 append(URL_SSL_PREFIX)
-            append(serverUrl)
+            append(serverUrl.url)
             append(URL_POSTFIX)
         }.toString()
     }

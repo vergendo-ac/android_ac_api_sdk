@@ -1,6 +1,10 @@
 package city.augmented.api.infrastructure
 
 object ServerProperties {
+    const val relocSuffix = "api/v2"
+    const val rpcSuffix = "rpc"
+    const val oscpSuffix = "scrs"
+
     val serverUrls: List<ServerUrl> = listOf(
         ServerUrl("developer.augmented.city"),
         ServerUrl("185.162.94.228:25000", false),
@@ -22,4 +26,6 @@ object ServerProperties {
 class ServerUrl(
     val url: String,
     val useSSL: Boolean = true
-)
+) {
+    override fun toString(): String = url
+}
