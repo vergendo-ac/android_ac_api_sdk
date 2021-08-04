@@ -1,9 +1,7 @@
 package city.augmented.api
 
-import city.augmented.api.infrastructure.ApiClient
-import city.augmented.api.model.GpsDto
-import city.augmented.api.model.ImageDescriptionDto
-import city.augmented.api.model.LocationDto
+import city.augmented.api.infrastructure.ACApiClient
+import city.augmented.api.model.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.junit.Assert
@@ -12,7 +10,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class LocalizerApiTest {
 
-    private val apiClient: ApiClient = ApiClient(
+    private val apiClient: ACApiClient = ACApiClient(
 //        okHttpClientBuilder = OkHttpClient().newBuilder()
 //            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
     )
@@ -27,8 +25,7 @@ class LocalizerApiTest {
             12.21
         )
 
-        var code = -1
-        val successCode = 0
+        var code = StatusCode.FAILURE
 
         localizerApiClient.prepareLocalizer(location)
             .ifLeft {
@@ -39,17 +36,17 @@ class LocalizerApiTest {
                 printSuccess(it.toString())
             }
 
-        Assert.assertEquals(successCode, code)
+        Assert.assertEquals(StatusCode.SUCCESS, code)
         return@runBlocking
     }
 
     @Test
     fun localize_test() = runBlocking {
-        val imageDescription = ImageDescriptionDto(GpsDto(60.0309083, 30.2414354), 90)
+        val imageDescription =
+            ImageDescriptionDto(GpsDto(60.0309083, 30.2414354), ImageRotation.ROTATION_90)
         val imageBytes = LocalizerApiTest::class.java.getResource("image.jpg")!!.readBytes()
 
-        val successCode = 0
-        var code = -1
+        var code = StatusCode.FAILURE
 
         localizerApiClient.localize(imageDescription, imageBytes)
             .ifLeft {
@@ -60,7 +57,7 @@ class LocalizerApiTest {
                 printSuccess(it.toString())
             }
 
-        Assert.assertEquals(successCode, code)
+        Assert.assertEquals(StatusCode.SUCCESS, code)
         return@runBlocking
     }
 

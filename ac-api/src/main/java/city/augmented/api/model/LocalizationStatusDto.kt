@@ -12,6 +12,11 @@ data class LocalizationStatusDto(
  */
 @JsonClass(generateAdapter = true)
 data class StatusDto(
-    var code: Int,
+    var code: StatusCode,
     var message: String
 )
+
+enum class StatusCode {
+    SUCCESS,
+    FAILURE
+}

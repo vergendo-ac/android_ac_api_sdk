@@ -7,10 +7,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ApiClient(
+class ACApiClient(
     private var baseUrl: ServerUrl = ServerProperties.mainUrl,
     private val retrofitBuilder: Retrofit.Builder = Retrofit.Builder(),
-    private val serializerBuilder: Moshi.Builder = Serializer.moshiBuilder,
+    private val converterBuilder: Moshi.Builder = ACAdapters.moshiBuilder,
     private val okHttpClientBuilder: OkHttpClient.Builder? = null
 ) {
     companion object {
@@ -23,7 +23,7 @@ class ApiClient(
         ScalarsConverterFactory.create()
     }
     private val moshiMainFactory: MoshiConverterFactory by lazy {
-        MoshiConverterFactory.create(serializerBuilder.build())
+        MoshiConverterFactory.create(converterBuilder.build())
     }
     private val clientBuilder: OkHttpClient.Builder by lazy {
         okHttpClientBuilder ?: defaultClientBuilder

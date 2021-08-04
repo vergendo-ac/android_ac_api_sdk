@@ -4,17 +4,21 @@ import city.augmented.api.entity.BooleanString
 import city.augmented.api.entity.InfoStickerType
 import city.augmented.api.entity.Object3dSubtype
 import city.augmented.api.entity.StickerType
+import city.augmented.api.model.ImageRotation
+import city.augmented.api.model.StatusCode
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 
-object Serializer {
+object ACAdapters {
     @JvmStatic
     val moshiBuilder: Moshi.Builder = Moshi.Builder()
         .add(BooleanStringAdapter())
         .add(StickerTypeAdapter())
         .add(InfoStickerTypeAdapter())
         .add(Object3DSubtypeAdapter())
+        .add(StatusCodeAdapter())
+        .add(ImageRotationAdapter())
 
     @JvmStatic
     val moshi: Moshi by lazy {
@@ -54,3 +58,26 @@ class Object3DSubtypeAdapter {
     fun fromJson(stringValue: String) = Object3dSubtype.fromString(stringValue)
 }
 
+class StatusCodeAdapter {
+    @ToJson
+    fun toJson(statusCode: StatusCode): Int = statusCode.ordinal
+
+    @FromJson
+    fun fromJson(intValue: Int): StatusCode = when (intValue) {
+        0 -> StatusCode.SUCCESS
+        else -> StatusCode.FAILURE
+    }
+}
+
+class ImageRotationAdapter {
+    @ToJson
+    fun toJson(statusCode: ImageRotation): Int = statusCode.angle
+
+    @FromJson
+    fun fromJson(intValue: Int): ImageRotation = when (intValue) {
+        90 -> ImageRotation.ROTATION_90
+        180 -> ImageRotation.ROTATION_180
+        270 -> ImageRotation.ROTATION_270
+        else -> ImageRotation.ROTATION_0
+    }
+}
