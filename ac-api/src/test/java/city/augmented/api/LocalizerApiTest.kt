@@ -60,8 +60,4 @@ class LocalizerApiTest {
         Assert.assertEquals(StatusCode.SUCCESS, code)
         return@runBlocking
     }
-
-    private fun printSuccess(message: String) = println("Success: $message")
-    private fun printFailure(message: String) = println("Failure: $message")
-
 }
