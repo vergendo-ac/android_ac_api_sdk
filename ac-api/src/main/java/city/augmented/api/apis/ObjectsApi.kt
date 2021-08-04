@@ -1,5 +1,7 @@
 package city.augmented.api.apis
 
+import city.augmented.api.infrastructure.ServerProperties.apiPrefix
+import city.augmented.api.infrastructure.ServerProperties.rpcPrefix
 import city.augmented.api.model.*
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -18,7 +20,7 @@ interface ObjectsApi {
      * @param objectWithPose
      * @return [AddObjectResult]
      */
-    @POST("object/pose")
+    @POST("$apiPrefix/object/pose")
     suspend fun addObjectByLocalPose(
         @Body objectWithPose: AddObjectWithLocalPoseDto
     ): Response<AddObjectResult>
@@ -34,7 +36,7 @@ interface ObjectsApi {
      * @param objectWithGeoPose
      * @return [AddObjectResult]
      */
-    @POST("object/geopose")
+    @POST("$apiPrefix/object/geopose")
     suspend fun addObjectByGeoPose(
         @Body objectWithGeoPose: AddObjectWithGeoPoseDto
     ): Response<AddObjectResult>
@@ -53,7 +55,7 @@ interface ObjectsApi {
      * @param objectWithGeoPoseFromAngles
      * @return [AddObjectResult]
      */
-    @POST("object/geopose_from_angles")
+    @POST("$apiPrefix/object/geopose_from_angles")
     suspend fun addObjectByGeoPoseFromAngles(
         @Body objectWithGeoPoseFromAngles: AddObjectWithGeoPoseFromAnglesDto
     ): Response<AddObjectResult>
@@ -72,7 +74,7 @@ interface ObjectsApi {
      * @return [AddObjectResult]
      */
     @Multipart
-    @POST("object")
+    @POST("$apiPrefix/object")
     suspend fun addObjectByImage(
         @Part("description") description: ObjectWithMarkedImageDto,
         @Part image: MultipartBody.Part
@@ -90,7 +92,7 @@ interface ObjectsApi {
      * @param updateObjectWithPose
      * @return [UpdateObjectStatusDto]
      */
-    @PUT("object/{placeholder_id}/pose")
+    @PUT("$apiPrefix/object/{placeholder_id}/pose")
     suspend fun updateObjectLocalPose(
         @Path("placeholder_id") placeholderId: Int,
         @Body updateObjectWithPose: UpdateObjectWithLocalPoseDto
@@ -108,7 +110,7 @@ interface ObjectsApi {
      * @param updateObjectWithGeoPose
      * @return [UpdateObjectStatusDto]
      */
-    @PUT("object/{placeholder_id}/geopose")
+    @PUT("$apiPrefix/object/{placeholder_id}/geopose")
     suspend fun updateObjectGeoPose(
         @Path("placeholder_id") placeholderId: Int,
         @Body updateObjectWithGeoPose: UpdateObjectWithGeoPoseDto
@@ -126,7 +128,7 @@ interface ObjectsApi {
      * @param updateObjectWithGeoPoseFromAngles
      * @return [UpdateObjectStatusDto]
      */
-    @PUT("object/{placeholder_id}/geopose_from_angles")
+    @PUT("$apiPrefix/object/{placeholder_id}/geopose_from_angles")
     suspend fun updateObjectGeoPoseFromAngles(
         @Path("placeholder_id") placeholderId: Int,
         @Body updateObjectWithGeoPoseFromAngles: UpdateObjectWithGeoPoseFromAnglesDto
@@ -143,7 +145,7 @@ interface ObjectsApi {
      * @param updateObjectContent
      * @return [UpdateObjectStatusDto]
      */
-    @PUT("object/{placeholder_id}/content")
+    @PUT("$apiPrefix/object/{placeholder_id}/content")
     suspend fun updateArObjectContent(
         @Body updateObjectContent: UpdateObjectContentDto
     ): Response<UpdateObjectStatusDto>
@@ -158,7 +160,7 @@ interface ObjectsApi {
      * @param getObjectsParams
      * @return [List<ARObjectOldDto>]
      */
-    @POST("get_stickers_by_placeholders")
+    @POST("$rpcPrefix/get_stickers_by_placeholders")
     suspend fun getObjectsByPlaceholdersIds(
         @Body getObjectsParams: GetObjectsByPlaceholdersIdsDto
     ): Response<List<ARObjectOldDto>>
@@ -173,7 +175,7 @@ interface ObjectsApi {
      * @param pRadius Search radius
      * @return [List<PlaceholderWithGpsDto>]
      */
-    @GET("get_near_placeholders")
+    @GET("$rpcPrefix/get_near_placeholders")
     suspend fun getPlaceholdersByGps(
         @Query("p_latitude") pLatitude: Double,
         @Query("p_longitude") pLongitude: Double,

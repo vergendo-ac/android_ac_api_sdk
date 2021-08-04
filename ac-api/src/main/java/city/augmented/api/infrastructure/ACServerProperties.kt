@@ -1,9 +1,9 @@
 package city.augmented.api.infrastructure
 
 object ServerProperties {
-    const val relocSuffix = "api/v2"
-    const val rpcSuffix = "rpc"
-    const val oscpSuffix = "scrs"
+    const val apiPrefix = "api/v2"
+    const val rpcPrefix = "rpc"
+    const val oscpPrefix = "scrs"
 
     val serverUrls: List<ServerUrl> = listOf(
         ServerUrl("developer.augmented.city"),

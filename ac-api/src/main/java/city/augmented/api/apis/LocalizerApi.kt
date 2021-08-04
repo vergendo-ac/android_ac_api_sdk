@@ -1,6 +1,6 @@
 package city.augmented.api.apis
 
-import city.augmented.api.infrastructure.ServerProperties
+import city.augmented.api.infrastructure.ServerProperties.apiPrefix
 import city.augmented.api.model.ImageDescriptionDto
 import city.augmented.api.model.LocalizationHintDto
 import city.augmented.api.model.LocalizationResultDto
@@ -27,7 +27,7 @@ interface LocalizerApi {
      * @return [LocalizationResultDto]
      */
     @Multipart
-    @POST("${ServerProperties.relocSuffix}/localizer/localize")
+    @POST("$apiPrefix/localizer/localize")
     suspend fun localize(
         @Part("description") description: ImageDescriptionDto,
         @Part image: MultipartBody.Part,
@@ -48,7 +48,7 @@ interface LocalizerApi {
      * @param hDop GPS HDOP (optional) (optional)
      * @return [LocalizationStatusDto]
      */
-    @GET("${ServerProperties.relocSuffix}/localizer/prepare")
+    @GET("$apiPrefix/localizer/prepare")
     suspend fun prepare(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
