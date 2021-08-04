@@ -13,11 +13,6 @@ class ACApiClient(
     private val converterBuilder: Moshi.Builder = ACAdapters.moshiBuilder,
     private val okHttpClientBuilder: OkHttpClient.Builder? = null
 ) {
-    companion object {
-        private const val URL_PREFIX = "http://"
-        private const val URL_SSL_PREFIX = "https://"
-        private const val URL_POSTFIX = "/"
-    }
 
     private val scalarsConverterFactory: ScalarsConverterFactory by lazy {
         ScalarsConverterFactory.create()
@@ -42,25 +37,11 @@ class ACApiClient(
     fun <S> createService(serviceClass: Class<S>): S {
         val usedCallFactory = clientBuilder.build()
         return retrofitBuilder
-            .baseUrl(prepareUrl(baseUrl))
+            .baseUrl(baseUrl.getFormattedUrl())
             .addConverterFactory(scalarsConverterFactory)
             .addConverterFactory(moshiMainFactory)
             .callFactory(usedCallFactory)
             .build()
             .create(serviceClass)
-    }
-
-    private fun prepareUrl(serverUrl: ServerUrl): String {
-        return StringBuilder().apply {
-            if (ServerProperties.serverUrls.contains(serverUrl))
-                if (serverUrl.useSSL)
-                    append(URL_SSL_PREFIX)
-                else
-                    append(URL_PREFIX)
-            else
-                append(URL_SSL_PREFIX)
-            append(serverUrl.url)
-            append(URL_POSTFIX)
-        }.toString()
     }
 }

@@ -24,8 +24,26 @@ object ServerProperties {
 }
 
 class ServerUrl(
-    val url: String,
-    val useSSL: Boolean = true
+    private val host: String,
+    private val useSSL: Boolean = true
 ) {
-    override fun toString(): String = url
+    companion object {
+        private const val URL_PREFIX = "http://"
+        private const val URL_SSL_PREFIX = "https://"
+        private const val URL_POSTFIX = "/"
+    }
+
+    override fun toString(): String = getFormattedUrl()
+
+    fun getFormattedUrl() = StringBuilder().apply {
+        if (ServerProperties.serverUrls.contains(this@ServerUrl))
+            if (useSSL)
+                append(URL_SSL_PREFIX)
+            else
+                append(URL_PREFIX)
+        else
+            append(URL_SSL_PREFIX)
+        append(host)
+        append(URL_POSTFIX)
+    }.toString()
 }
