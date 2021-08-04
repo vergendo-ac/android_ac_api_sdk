@@ -4,6 +4,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ImageDescriptionDto(
-    val gps: Gps,
-    val rotation: Int
+    val gps: GpsDto,
+    val rotation: Int = 0
 )

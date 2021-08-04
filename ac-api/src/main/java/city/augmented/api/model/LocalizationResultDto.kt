@@ -18,7 +18,7 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class LocalizationResultDto(
-    var status: LocalizationStatusDto,
+    var status: StatusDto,
     var camera: CameraDto? = null,
     @Json(name = "reconstruction_id")
     var reconstructionId: Int? = null,
