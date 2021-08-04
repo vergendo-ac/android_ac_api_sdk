@@ -5,6 +5,7 @@ import city.augmented.api.entity.InfoStickerType
 import city.augmented.api.entity.Object3dSubtype
 import city.augmented.api.entity.StickerType
 import city.augmented.api.model.ImageRotation
+import city.augmented.api.model.LanguageType
 import city.augmented.api.model.StatusCode
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
@@ -19,6 +20,7 @@ object ACAdapters {
         .add(Object3DSubtypeAdapter())
         .add(StatusCodeAdapter())
         .add(ImageRotationAdapter())
+        .add(LanguageTypeAdapter())
 
     @JvmStatic
     val moshi: Moshi by lazy {
@@ -79,5 +81,16 @@ class ImageRotationAdapter {
         180 -> ImageRotation.ROTATION_180
         270 -> ImageRotation.ROTATION_270
         else -> ImageRotation.ROTATION_0
+    }
+}
+
+class LanguageTypeAdapter {
+    @ToJson
+    fun toJson(language: LanguageType): String = language.name.lowercase()
+
+    @FromJson
+    fun fromJson(stringValue: String): LanguageType = when (stringValue) {
+        "ru" -> LanguageType.RU
+        else -> LanguageType.EN
     }
 }
