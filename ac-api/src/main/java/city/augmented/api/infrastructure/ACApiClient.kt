@@ -1,5 +1,6 @@
 package city.augmented.api.infrastructure
 
+import city.augmented.api.apis.LocalizerApi
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -13,6 +14,7 @@ class ACApiClient(
     private val converterBuilder: Moshi.Builder = ACAdapters.moshiBuilder,
     private val okHttpClientBuilder: OkHttpClient.Builder? = null
 ) {
+    private var localizerServiceInstance: LocalizerApi? = null
 
     private val scalarsConverterFactory: ScalarsConverterFactory by lazy {
         ScalarsConverterFactory.create()
@@ -32,9 +34,10 @@ class ACApiClient(
 
     fun changeServerUrl(newUrl: ServerUrl) {
         baseUrl = newUrl
+        localizerServiceInstance = null
     }
 
-    fun <S> createService(serviceClass: Class<S>): S {
+    private fun <S> createService(serviceClass: Class<S>): S {
         val usedCallFactory = clientBuilder.build()
         return retrofitBuilder
             .baseUrl(baseUrl.getFormattedUrl())
@@ -44,4 +47,6 @@ class ACApiClient(
             .build()
             .create(serviceClass)
     }
+
+    fun getLocalizerService() = localizerServiceInstance ?: createService(LocalizerApi::class.java)
 }

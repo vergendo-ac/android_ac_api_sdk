@@ -14,7 +14,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class LocalizerApiClient(private val apiClient: ACApiClient) {
     private val localizer: LocalizerApi
-        get() = apiClient.createService(LocalizerApi::class.java)
+        get() = apiClient.getLocalizerService()
 
     suspend fun localize(
         description: ImageDescriptionDto,
