@@ -21,6 +21,9 @@ object ServerProperties {
 
     val mainUrl: ServerUrl
         get() = serverUrls[0]
+
+    val testingUrl: ServerUrl
+        get() = serverUrls[7]
 }
 
 class ServerUrl(

@@ -6,6 +6,9 @@ import arrow.core.Left
 import arrow.core.Right
 import city.augmented.api.entity.ApiError
 import com.squareup.moshi.JsonDataException
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 
 inline fun <reified T> safeInvoke(apiInvoke: () -> Response<T>): Either<ApiError, T> =
@@ -44,6 +47,16 @@ fun resolveResponseError(httpCode: Int, message: String?): ApiError {
         else -> ApiError.UnknownConnectionError("Unknown connection error. $errorMessage")
     }
 }
+
+fun ByteArray.toMultipartBody() = MultipartBody.Part.createFormData(
+    "image",
+    null,
+    toRequestBody(
+        "multipart/form-data".toMediaTypeOrNull(),
+        0,
+        size
+    )
+)
 
 fun <A, B> Either<A, B>.ifLeft(invokeLeft: (A) -> Unit): Either<A, B> {
     if (this is Either.Left) invokeLeft(a)

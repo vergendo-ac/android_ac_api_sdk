@@ -180,5 +180,5 @@ interface ObjectsApi {
         @Query("p_latitude") pLatitude: Double,
         @Query("p_longitude") pLongitude: Double,
         @Query("p_radius") pRadius: Float
-    ): Response<List<PlaceholderWithGpsDto>>
+    ): Response<List<PlaceholderWithGpsResultDto>>
 }

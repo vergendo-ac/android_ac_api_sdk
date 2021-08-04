@@ -8,9 +8,6 @@ import city.augmented.api.model.ImageDescriptionDto
 import city.augmented.api.model.LocalizationResultDto
 import city.augmented.api.model.LocalizationStatusDto
 import city.augmented.api.model.LocationDto
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 
 class LocalizerApiClient(private val apiClient: ACApiClient) {
     private val localizer: LocalizerApi
@@ -22,15 +19,7 @@ class LocalizerApiClient(private val apiClient: ACApiClient) {
     ): Either<ApiError, LocalizationResultDto> = safeInvoke {
         localizer.localize(
             description,
-            MultipartBody.Part.createFormData(
-                "image",
-                null,
-                imageBytes.toRequestBody(
-                    "multipart/form-data".toMediaTypeOrNull(),
-                    0,
-                    imageBytes.size
-                )
-            )
+            imageBytes.toMultipartBody()
         )
     }
 
