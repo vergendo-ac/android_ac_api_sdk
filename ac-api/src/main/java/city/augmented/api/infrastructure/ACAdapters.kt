@@ -1,9 +1,6 @@
 package city.augmented.api.infrastructure
 
-import city.augmented.api.entity.BooleanString
-import city.augmented.api.entity.InfoStickerType
-import city.augmented.api.entity.Object3dSubtype
-import city.augmented.api.entity.StickerType
+import city.augmented.api.entity.*
 import city.augmented.api.model.ImageRotation
 import city.augmented.api.model.LanguageType
 import city.augmented.api.model.StatusCode
@@ -21,6 +18,7 @@ object ACAdapters {
         .add(StatusCodeAdapter())
         .add(ImageRotationAdapter())
         .add(LanguageTypeAdapter())
+        .add(PlatformTypeAdapter())
 
     @JvmStatic
     val moshi: Moshi by lazy {
@@ -93,4 +91,12 @@ class LanguageTypeAdapter {
         "ru" -> LanguageType.RU
         else -> LanguageType.EN
     }
+}
+
+class PlatformTypeAdapter {
+    @ToJson
+    fun toJson(platform: PlatformType): String = platform.toString()
+
+    @FromJson
+    fun fromJson(stringValue: String): PlatformType = PlatformType.fromString(stringValue)
 }

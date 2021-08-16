@@ -1,6 +1,7 @@
 package city.augmented.api.infrastructure
 
 import city.augmented.api.apis.LocalizerApi
+import city.augmented.api.apis.Models3dApi
 import city.augmented.api.apis.ObjectsApi
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -17,6 +18,7 @@ class ACApiClient(
 ) {
     private var localizerServiceInstance: LocalizerApi? = null
     private var objectsServiceInstance: ObjectsApi? = null
+    private var models3dServiceInstance: Models3dApi? = null
 
     private val scalarsConverterFactory: ScalarsConverterFactory by lazy {
         ScalarsConverterFactory.create()
@@ -38,6 +40,7 @@ class ACApiClient(
         baseUrl = newUrl
         localizerServiceInstance = null
         objectsServiceInstance = null
+        models3dServiceInstance = null
     }
 
     private fun <S> createService(serviceClass: Class<S>): S {
@@ -53,4 +56,5 @@ class ACApiClient(
 
     fun getLocalizerService() = localizerServiceInstance ?: createService(LocalizerApi::class.java)
     fun getObjectsService() = objectsServiceInstance ?: createService(ObjectsApi::class.java)
+    fun getModels3dApi() = models3dServiceInstance ?: createService(Models3dApi::class.java)
 }
