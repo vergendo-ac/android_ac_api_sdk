@@ -24,6 +24,17 @@ data class LocalizationResultDto(
 )
 
 @JsonClass(generateAdapter = true)
+data class LocalizationResultRawDto(
+    var status: StatusDto,
+    var camera: CameraDto? = null,
+    @Json(name = "reconstruction_id")
+    var reconstructionId: Int? = null,
+    var placeholders: List<PlaceholderNode3dDto>? = null,
+    var surfaces: List<SurfaceDto>? = null,
+    var objects: List<ARObjectRawDto>? = null
+)
+
+@JsonClass(generateAdapter = true)
 data class CameraDto(
     var pose: PoseDto,
     var intrinsics: CameraIntrinsicsDto? = null,

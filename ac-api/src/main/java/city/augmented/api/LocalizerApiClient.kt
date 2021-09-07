@@ -28,6 +28,23 @@ class LocalizerApiClient(private val apiClient: ACApiClient) {
         return result
     }
 
+    suspend fun localizeWithCustomSticker(
+        description: ImageDescriptionDto,
+        imageBytes: ByteArray
+    ): Either<ApiError, LocalizationResultRawDto> {
+        val result = safeInvoke {
+            localizer.localizeWithCustomSticker(
+                description,
+                imageBytes.toMultipartBody()
+            )
+        }
+        result.fold({}, {
+            if (it.status.code == StatusCode.FAILURE)
+                return Left(ApiError.CantLocalize)
+        })
+        return result
+    }
+
     suspend fun prepareLocalizer(location: LocationDto): Either<ApiError, LocalizationStatusDto> =
         safeInvoke {
             localizer.prepare(

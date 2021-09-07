@@ -60,4 +60,25 @@ class LocalizerApiTest {
         Assert.assertEquals(StatusCode.SUCCESS, code)
         return@runBlocking
     }
+
+    @Test
+    fun localizeWithCustomSticker_test() = runBlocking {
+        val imageDescription =
+            ImageDescriptionDto(GpsDto(60.0309083, 30.2414354), ImageRotation.ROTATION_90)
+        val imageBytes = LocalizerApiTest::class.java.getResource("image.jpg")!!.readBytes()
+
+        var code = StatusCode.FAILURE
+
+        localizerApiClient.localizeWithCustomSticker(imageDescription, imageBytes)
+            .fold( {
+                printFailure(it.message)
+            }
+            , {
+                code = it.status.code
+                printSuccess(it.toString())
+            })
+
+        Assert.assertEquals(StatusCode.SUCCESS, code)
+        return@runBlocking
+    }
 }

@@ -14,6 +14,12 @@ data class ARObjectOldDto(
 )
 
 @JsonClass(generateAdapter = true)
+data class ARObjectRawDto(
+    var placeholder: PlaceholderOldDto,
+    var sticker: Map<String, String>
+)
+
+@JsonClass(generateAdapter = true)
 data class PlaceholderOldDto(
     @Json(name = "placeholder_id")
     var placeholderId: String

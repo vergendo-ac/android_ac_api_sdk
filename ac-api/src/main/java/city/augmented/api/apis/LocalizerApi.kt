@@ -1,10 +1,7 @@
 package city.augmented.api.apis
 
 import city.augmented.api.infrastructure.ServerProperties.apiPrefix
-import city.augmented.api.model.ImageDescriptionDto
-import city.augmented.api.model.LocalizationHintDto
-import city.augmented.api.model.LocalizationResultDto
-import city.augmented.api.model.LocalizationStatusDto
+import city.augmented.api.model.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -33,6 +30,14 @@ interface LocalizerApi {
         @Part image: MultipartBody.Part,
         @Part("hint") hint: LocalizationHintDto? = null
     ): Response<LocalizationResultDto>
+
+    @Multipart
+    @POST("$apiPrefix/localizer/localize")
+    suspend fun localizeWithCustomSticker(
+        @Part("description") description: ImageDescriptionDto,
+        @Part image: MultipartBody.Part,
+        @Part("hint") hint: LocalizationHintDto? = null
+    ): Response<LocalizationResultRawDto>
 
     /**
      * Prepare localization session
