@@ -22,11 +22,11 @@ data class PlaceholderOldDto(
 @JsonClass(generateAdapter = true)
 class StickerDto(
     @Json(name = "sticker_id")
-    val stickerId: String, // common required
-    val type: StickerType, // common required
+    val stickerId: String = "", // common required
+    val type: StickerType = StickerType.INFOSTICKER, // common required
     @Json(name = "sticker_text")
-    val stickerText: String, // common required
-    val path: String, // common required
+    val stickerText: String = "", // common required
+    val path: String = "", // common required
     val description: String = "", // common not required
     @Json(name = "sticker_type")
     val infoStickerType: InfoStickerType = InfoStickerType.OTHER, // InfoStickerOld required
