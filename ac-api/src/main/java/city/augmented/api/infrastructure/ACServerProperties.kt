@@ -4,6 +4,7 @@ object ServerProperties {
     const val apiPrefix = "api/v2"
     const val rpcPrefix = "rpc"
     const val oscpPrefix = "scrs"
+    const val prefix3d = "3d"
 
     val serverUrls: List<ServerUrl> = listOf(
         ServerUrl("developer.augmented.city"),

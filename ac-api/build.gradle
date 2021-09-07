@@ -51,15 +51,15 @@ dependencies {
 
     def retrofit_version = "2.9.0"
     def moshi_version = "1.12.0"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
+    api "com.squareup.moshi:moshi:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    api 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    api "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     def arrow_version = "0.10.5"
-    implementation("io.arrow-kt:arrow-core:$arrow_version")
-    implementation("io.arrow-kt:arrow-syntax:$arrow_version")
+    api("io.arrow-kt:arrow-core:$arrow_version")
+    api("io.arrow-kt:arrow-syntax:$arrow_version")
     kapt("io.arrow-kt:arrow-meta:$arrow_version")
 }
