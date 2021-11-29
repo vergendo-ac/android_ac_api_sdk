@@ -8,5 +8,6 @@ sealed class ApiError(val message: String) {
     data class BadRequest(val customMessage: String) : ApiError(customMessage)
     data class UnexpectedRedirection(val customMessage: String) : ApiError(customMessage)
     data class UnknownConnectionError(val customMessage: String) : ApiError(customMessage)
+    data class NotLocalized(val customMessage: String) : ApiError(customMessage)
     object EmptyResponseBody : ApiError("Request successful but body is null")
 }

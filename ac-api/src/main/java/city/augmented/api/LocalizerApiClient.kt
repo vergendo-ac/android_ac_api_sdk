@@ -1,13 +1,11 @@
 package city.augmented.api
 
 import arrow.core.Either
+import arrow.core.filterOrElse
 import city.augmented.api.apis.LocalizerApi
 import city.augmented.api.entity.ApiError
 import city.augmented.api.infrastructure.ACApiClient
-import city.augmented.api.model.ImageDescriptionDto
-import city.augmented.api.model.LocalizationResultDto
-import city.augmented.api.model.LocalizationStatusDto
-import city.augmented.api.model.LocationDto
+import city.augmented.api.model.*
 
 class LocalizerApiClient(private val apiClient: ACApiClient) {
     private val localizer: LocalizerApi
@@ -21,7 +19,10 @@ class LocalizerApiClient(private val apiClient: ACApiClient) {
             description,
             imageBytes.toMultipartBody()
         )
-    }
+    }.filterOrElse(
+        { it.status.code == StatusCode.SUCCESS },
+        { ApiError.NotLocalized("Image not localized") }
+    )
 
     suspend fun prepareLocalizer(location: LocationDto): Either<ApiError, LocalizationStatusDto> =
         safeInvoke {
