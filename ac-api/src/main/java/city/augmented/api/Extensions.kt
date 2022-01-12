@@ -58,12 +58,12 @@ fun ByteArray.toMultipartBody() = MultipartBody.Part.createFormData(
     )
 )
 
-fun <A, B> Either<A, B>.ifLeft(invokeLeft: (A) -> Unit): Either<A, B> {
+inline fun <A, B> Either<A, B>.ifLeft(invokeLeft: (A) -> Unit): Either<A, B> {
     if (this is Either.Left) invokeLeft(a)
     return this
 }
 
-fun <A, B> Either<A, B>.ifRight(invokeRight: (B) -> Unit): Either<A, B> {
+inline fun <A, B> Either<A, B>.ifRight(invokeRight: (B) -> Unit): Either<A, B> {
     if (this is Either.Right) invokeRight(b)
     return this
 }

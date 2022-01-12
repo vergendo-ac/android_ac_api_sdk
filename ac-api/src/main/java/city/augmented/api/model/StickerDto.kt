@@ -23,7 +23,7 @@ data class PlaceholderOldDto(
 class StickerDto(
     @Json(name = "sticker_id")
     val stickerId: String, // common required
-    val type: StickerType, // common required
+    val type: StickerType = StickerType.INFOSTICKER, // common required (but sometimes missing)
     @Json(name = "sticker_text")
     val stickerText: String, // common required
     val path: String, // common required
